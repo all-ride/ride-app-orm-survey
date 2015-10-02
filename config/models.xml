@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<models>
+    <model name="Survey">
+        <field name="name" type="string">
+            <option name="scaffold.order" value="true"/>
+            <option name="scaffold.search" value="true"/>
+            <validation name="required"/>
+        </field>
+        <field name="questions" model="SurveyQuestion" relation="hasMany" relationOrder="{weight} ASC">
+            <option name="scaffold.form.omit" value="1"/>
+        </field>
+
+        <format name="title">{name}</format>
+
+        <option name="json.api" value="surveys"/>
+        <option name="scaffold.controller" value="ride\web\orm\controller\SurveyController" />
+        <option name="scaffold.expose" value="true"/>
+        <option name="scaffold.title" value="title.surveys"/>
+    </model>
+    <model name="SurveyQuestion">
+        <field name="survey" model="Survey" relation="belongsTo">
+            <option name="scaffold.form.omit" value="1"/>
+        </field>
+        <field name="question" type="text" localized="true">
+            <option name="label.name" value="label.question"/>
+            <option name="scaffold.order" value="true"/>
+            <option name="scaffold.search" value="true"/>
+            <validation name="required"/>
+        </field>
+        <field name="description" type="text" localized="true">
+            <option name="label.name" value="label.description"/>
+            <option name="scaffold.order" value="true"/>
+            <option name="scaffold.search" value="true"/>
+        </field>
+        <field name="isOpen" type="boolean">
+            <option name="label.name" value="label.question.open"/>
+            <option name="label.description" value="label.question.open.description"/>
+        </field>
+        <field name="isMultiple" type="boolean">
+            <option name="label.name" value="label.question.multiple"/>
+            <option name="label.description" value="label.question.multiple.description"/>
+        </field>
+        <field name="answers" model="SurveyAnswer" relation="hasMany" order="true" linkModel="SurveyQuestionAnswer">
+            <option name="label.name" value="label.answers"/>
+        </field>
+        <field name="weight" type="integer">
+            <option name="scaffold.form.omit" value="1"/>
+        </field>
+
+        <format name="title">{question}</format>
+
+        <option name="behaviour.log" value="true"/>
+        <option name="json.api" value="survey-questions"/>
+        <option name="order.field" value="question"/>
+    </model>
+    <model name="SurveyAnswer">
+        <field name="answer" type="text" localized="true">
+            <option name="label.name" value="label.answer"/>
+            <option name="scaffold.order" value="true"/>
+            <option name="scaffold.search" value="true"/>
+            <validation name="required"/>
+        </field>
+        <field name="score" type="integer">
+            <option name="label.name" value="label.survey.score"/>
+            <option name="label.description" value="label.survey.score.description"/>
+        </field>
+        <field name="likert" model="SurveyLikert" relation="belongsTo">
+            <option name="scaffold.form.omit" value="1"/>
+        </field>
+
+        <option name="behaviour.log" value="true" />
+        <option name="json.api" value="survey-answers"/>
+    </model>
+    <model name="SurveyLikert">
+        <field name="name" type="string">
+            <option name="label.name" value="label.name"/>
+            <option name="scaffold.order" value="true"/>
+            <option name="scaffold.search" value="true"/>
+            <validation name="required"/>
+        </field>
+        <field name="answers" model="SurveyAnswer" relation="hasMany" order="true" linkModel="SurveyLikertAnswer">
+            <option name="label.name" value="label.answers"/>
+            <validation name="size">
+                <parameter name="minimum" value="2"/>
+            </validation>
+        </field>
+
+        <format name="title">{name}</format>
+
+        <option name="json.api" value="survey-likerts"/>
+        <option name="scaffold.controller" value="ride\web\orm\controller\SurveyLikertController" />
+        <option name="scaffold.title" value="title.likert"/>
+    </model>
+    <model name="SurveyEvaluation">
+        <field name="name" type="string">
+            <option name="scaffold.order" value="true"/>
+            <option name="scaffold.search" value="true"/>
+            <validation name="required"/>
+        </field>
+        <field name="questions" model="SurveyQuestion" relation="hasMany" linkModel="SurveyEvaluationRuleQuestion">
+            <option name="scaffold.form.type" value="select"/>
+            <validation name="required"/>
+        </field>
+        <field name="rules" model="SurveyEvaluationRule" relation="hasMany">
+            <validation name="required"/>
+        </field>
+
+        <format name="title">{name}</format>
+        <format name="teaser">{survey.name}</format>
+
+        <option name="json.api" value="survey-evaluations"/>
+        <option name="scaffold.controller" value="ride\web\orm\controller\SurveyEvaluationController" />
+        <option name="scaffold.title" value="title.evaluations"/>
+    </model>
+    <model name="SurveyEvaluationRule">
+        <field name="evaluation" model="SurveyEvaluation" relation="belongsTo">
+            <option name="scaffold.form.omit" value="1"/>
+            <validation name="required"/>
+        </field>
+        <field name="title" type="string" localized="true">
+            <option name="scaffold.order" value="true"/>
+            <option name="scaffold.search" value="true"/>
+            <validation name="required"/>
+        </field>
+        <field name="body" type="wysiwyg" localized="true">
+            <option name="scaffold.search" value="true"/>
+            <validation name="required"/>
+        </field>
+        <field name="minimumScore" type="integer">
+            <validation name="required"/>
+        </field>
+        <field name="maximumScore" type="integer">
+            <validation name="required"/>
+        </field>
+
+        <format name="title">{title}</format>
+        <format name="teaser">{minimumScore} &lt; {maximumScore}</format>
+
+        <option name="json.api" value="survey-evaluation-rules"/>
+    </model>
+    <model name="SurveyEntry">
+        <field name="name" type="string">
+            <option name="scaffold.order" value="true"/>
+            <option name="scaffold.search" value="true"/>
+            <validation name="required"/>
+        </field>
+        <field name="survey" model="Survey" relation="belongsTo">
+            <option name="scaffold.form.type" value="label"/>
+        </field>
+        <field name="answers" model="SurveyEntryAnswer" relation="hasMany">
+            <option name="scaffold.form.omit" value="1"/>
+        </field>
+
+        <option name="behaviour.date" value="true" />
+        <option name="json.api" value="survey-entries"/>
+    </model>
+    <model name="SurveyEntryAnswer">
+        <field name="entry" model="SurveyEntry" relation="belongsTo">
+            <option name="scaffold.form.omit" value="1"/>
+        </field>
+        <field name="question" model="SurveyQuestion" relation="belongsTo">
+            <option name="scaffold.form.omit" value="1"/>
+        </field>
+        <field name="questionAnswer" model="SurveyAnswer" relation="belongsTo">
+            <option name="scaffold.form.omit" value="1"/>
+        </field>
+        <field name="answer" model="SurveyAnswer" relation="belongsTo">
+            <option name="scaffold.form.omit" value="1"/>
+        </field>
+        <field name="description" type="text" localized="true">
+            <option name="label.name" value="label.answer"/>
+            <option name="scaffold.order" value="true"/>
+            <option name="scaffold.search" value="true"/>
+        </field>
+
+        <option name="behaviour.date" value="true" />
+        <option name="behaviour.log" value="true" />
+        <option name="json.api" value="survey-entry-answers"/>
+    </model>
+</models>
