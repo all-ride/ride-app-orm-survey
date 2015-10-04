@@ -17,7 +17,7 @@
         <option name="scaffold.expose" value="true"/>
         <option name="scaffold.title" value="title.surveys"/>
     </model>
-    <model name="SurveyQuestion">
+    <model name="SurveyQuestion" entryClass="ride\application\orm\survey\entry\SurveyQuestionEntry">
         <field name="survey" model="Survey" relation="belongsTo">
             <option name="scaffold.form.omit" value="1"/>
         </field>
@@ -71,7 +71,7 @@
         <option name="behaviour.log" value="true" />
         <option name="json.api" value="survey-answers"/>
     </model>
-    <model name="SurveyLikert">
+    <model name="SurveyLikert" entryClass="ride\application\orm\survey\entry\SurveyLikertEntry">
         <field name="name" type="string">
             <option name="label.name" value="label.name"/>
             <option name="scaffold.order" value="true"/>
@@ -87,21 +87,24 @@
 
         <format name="title">{name}</format>
 
-        <option name="json.api" value="survey-likerts"/>
+        <option name="json.api" value="survey-likert-scales"/>
         <option name="scaffold.controller" value="ride\web\orm\controller\SurveyLikertController" />
         <option name="scaffold.title" value="title.likert"/>
     </model>
-    <model name="SurveyEvaluation">
+    <model name="SurveyEvaluation" modelClass="ride\application\orm\survey\model\SurveyEvaluationModel" entryClass="ride\application\orm\survey\entry\SurveyEvaluationEntry">
         <field name="name" type="string">
+            <option name="label.name" value="label.name"/>
             <option name="scaffold.order" value="true"/>
             <option name="scaffold.search" value="true"/>
             <validation name="required"/>
         </field>
         <field name="questions" model="SurveyQuestion" relation="hasMany" linkModel="SurveyEvaluationRuleQuestion">
+            <option name="label.name" value="label.questions"/>
             <option name="scaffold.form.type" value="select"/>
             <validation name="required"/>
         </field>
         <field name="rules" model="SurveyEvaluationRule" relation="hasMany">
+            <option name="label.name" value="label.rules"/>
             <validation name="required"/>
         </field>
 
@@ -118,18 +121,22 @@
             <validation name="required"/>
         </field>
         <field name="title" type="string" localized="true">
+            <option name="label.name" value="label.title"/>
             <option name="scaffold.order" value="true"/>
             <option name="scaffold.search" value="true"/>
             <validation name="required"/>
         </field>
         <field name="body" type="wysiwyg" localized="true">
+            <option name="label.name" value="label.body"/>
             <option name="scaffold.search" value="true"/>
             <validation name="required"/>
         </field>
         <field name="minimumScore" type="integer">
+            <option name="label.name" value="label.survey.score.minimum"/>
             <validation name="required"/>
         </field>
         <field name="maximumScore" type="integer">
+            <option name="label.name" value="label.survey.score.maximum"/>
             <validation name="required"/>
         </field>
 
@@ -138,7 +145,7 @@
 
         <option name="json.api" value="survey-evaluation-rules"/>
     </model>
-    <model name="SurveyEntry">
+    <model name="SurveyEntry" entryClass="ride\application\orm\survey\entry\SurveyEntryEntry">
         <field name="name" type="string">
             <option name="scaffold.order" value="true"/>
             <option name="scaffold.search" value="true"/>
@@ -151,15 +158,22 @@
             <option name="scaffold.form.omit" value="1"/>
         </field>
 
+        <format name="title">{name}</format>
+        <format name="teaser">{dateAdded|date}</format>
+
         <option name="behaviour.date" value="true" />
+        <option name="order.direction" value="DESC"/>
+        <option name="order.field" value="dateAdded"/>
         <option name="json.api" value="survey-entries"/>
     </model>
     <model name="SurveyEntryAnswer">
         <field name="entry" model="SurveyEntry" relation="belongsTo">
             <option name="scaffold.form.omit" value="1"/>
+            <validation name="required"/>
         </field>
         <field name="question" model="SurveyQuestion" relation="belongsTo">
             <option name="scaffold.form.omit" value="1"/>
+            <validation name="required"/>
         </field>
         <field name="questionAnswer" model="SurveyAnswer" relation="belongsTo">
             <option name="scaffold.form.omit" value="1"/>
