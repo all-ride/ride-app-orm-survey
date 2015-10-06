@@ -1,7 +1,7 @@
 {
     "name": "ride/app-orm-survey",
     "description": "Survey model for the Ride ORM.",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "authors": [
         {
             "name": "Joris Vandeweerd",
@@ -11,5 +11,10 @@
     "require": {
         "ride/app-orm": ">=0.2.0",
         "ride/lib-orm": ">=0.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "ride\\application\\orm\\survey\\": ["src/"]
+        }
     }
 }
