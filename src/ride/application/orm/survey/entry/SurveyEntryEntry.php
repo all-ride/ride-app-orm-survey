@@ -10,6 +10,14 @@ use ride\application\orm\entry\SurveyEntryEntry as OrmSurveyEntryEntry;
 class SurveyEntryEntry extends OrmSurveyEntryEntry {
 
     /**
+     * Gets the hash of this entry
+     * @return string
+     */
+    public function getHash() {
+        return substr(md5($this->getId() . '-' . $this->getDateAdded()), 0, 10);
+    }
+
+    /**
      * Gets all the answers for the provided question
      * @param integer $questionId Id of the question
      * @return array
