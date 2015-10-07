@@ -6,6 +6,11 @@
             <option name="scaffold.search" value="true"/>
             <validation name="required"/>
         </field>
+        <field name="description" type="wysiwyg" localized="true">
+            <option name="label.name" value="label.description" />
+            <option name="scaffold.search" value="true" />
+        </field>
+
         <field name="questions" model="SurveyQuestion" relation="hasMany" relationOrder="{weight} ASC">
             <option name="scaffold.form.omit" value="1"/>
         </field>
@@ -27,7 +32,7 @@
             <option name="scaffold.search" value="true"/>
             <validation name="required"/>
         </field>
-        <field name="description" type="text" localized="true">
+        <field name="description" type="wysiwyg" localized="true">
             <option name="label.name" value="label.description"/>
             <option name="scaffold.order" value="true"/>
             <option name="scaffold.search" value="true"/>
