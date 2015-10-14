@@ -10,6 +10,22 @@ use ride\application\orm\entry\SurveyEvaluationEntry as OrmSurveyEvaluationEntry
 class SurveyEvaluationEntry extends OrmSurveyEvaluationEntry {
 
     /**
+     * Checks if this evaluation contains the provided question
+     * @param SurveyQuestionEntry $question
+     * @return boolean
+     */
+    public function hasQuestion(SurveyQuestionEntry $question) {
+        $questions = $this->getQuestions();
+        foreach ($questions as $q) {
+            if ($q->getId() == $question->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Evaluates the provided entry
      * @param \ride\application\orm\entry\SurveyEvaluationEntry $entry
      * @return SurveyEvaluationResult
