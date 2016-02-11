@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <models>
     <model name="Survey">
-        <field name="name" type="string">
+        <field name="name" type="string" localized="true">
             <option name="scaffold.order" value="true"/>
             <option name="scaffold.search" value="true"/>
             <validation name="required"/>
@@ -77,7 +77,7 @@
         <option name="json.api" value="survey-answers"/>
     </model>
     <model name="SurveyLikert" entryClass="ride\application\orm\survey\entry\SurveyLikertEntry">
-        <field name="name" type="string">
+        <field name="name" type="string" localized="true">
             <option name="label.name" value="label.name"/>
             <option name="scaffold.order" value="true"/>
             <option name="scaffold.search" value="true"/>
@@ -97,7 +97,7 @@
         <option name="scaffold.title" value="title.likert"/>
     </model>
     <model name="SurveyEvaluation" modelClass="ride\application\orm\survey\model\SurveyEvaluationModel" entryClass="ride\application\orm\survey\entry\SurveyEvaluationEntry">
-        <field name="name" type="string">
+        <field name="name" type="string" localized="true">
             <option name="label.name" value="label.name"/>
             <option name="scaffold.order" value="true"/>
             <option name="scaffold.search" value="true"/>
