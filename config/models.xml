@@ -50,13 +50,14 @@
         </field>
         <field name="weight" type="integer">
             <option name="scaffold.form.omit" value="1"/>
+            <option name="scaffold.order" value="true"/>
         </field>
 
         <format name="title">{question}</format>
 
         <option name="behaviour.log" value="true"/>
         <option name="json.api" value="survey-questions"/>
-        <option name="order.field" value="question"/>
+        <option name="order.field" value="weight"/>
     </model>
     <model name="SurveyAnswer">
         <field name="answer" type="text" localized="true">
