@@ -49,7 +49,7 @@
             <option name="label.name" value="label.answers"/>
         </field>
         <field name="weight" type="integer">
-            <option name="scaffold.form.omit" value="1"/>
+            <!-- <option name="scaffold.form.omit" value="1"/> -->
             <option name="scaffold.order" value="true"/>
         </field>
 
