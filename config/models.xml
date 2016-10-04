@@ -17,6 +17,8 @@
 
         <format name="title">{name}</format>
 
+        <option name="behaviour.date" value="true" />
+        <option name="behaviour.log" value="true" />
         <option name="json.api" value="surveys"/>
         <option name="scaffold.controller" value="ride\web\orm\controller\SurveyController" />
         <option name="scaffold.expose" value="true"/>
@@ -55,6 +57,7 @@
 
         <format name="title">{question}</format>
 
+        <option name="behaviour.date" value="true" />
         <option name="behaviour.log" value="true"/>
         <option name="json.api" value="survey-questions"/>
         <option name="order.field" value="weight"/>
@@ -74,6 +77,7 @@
             <option name="scaffold.form.omit" value="1"/>
         </field>
 
+        <option name="behaviour.date" value="true" />
         <option name="behaviour.log" value="true" />
         <option name="json.api" value="survey-answers"/>
     </model>
@@ -93,6 +97,8 @@
 
         <format name="title">{name}</format>
 
+        <option name="behaviour.date" value="true" />
+        <option name="behaviour.log" value="true" />
         <option name="json.api" value="survey-likert-scales"/>
         <option name="scaffold.controller" value="ride\web\orm\controller\SurveyLikertController" />
         <option name="scaffold.title" value="title.likert"/>
@@ -113,13 +119,32 @@
             <option name="label.name" value="label.rules"/>
             <validation name="required"/>
         </field>
+        <field name="averageScore" type="float">
+            <option name="scaffold.form.omit" value="true"/>
+        </field>
 
         <format name="title">{name}</format>
         <format name="teaser">{survey.name}</format>
 
+        <option name="behaviour.date" value="true" />
+        <option name="behaviour.log" value="true" />
         <option name="json.api" value="survey-evaluations"/>
         <option name="scaffold.controller" value="ride\web\orm\controller\SurveyEvaluationController" />
         <option name="scaffold.title" value="title.evaluations"/>
+    </model>
+    <model name="SurveyEvaluationLog">
+        <field name="evaluation" model="SurveyEvaluation" relation="belongsTo">
+            <validator name="required"/>
+        </field>
+        <field name="entry" model="SurveyEntry" relation="belongsTo">
+            <validator name="required"/>
+        </field>
+        <field name="score" type="integer">
+            <validator name="required"/>
+        </field>
+
+        <option name="behaviour.date" value="true" />
+        <option name="json.api" value="survey-evaluation-logs"/>
     </model>
     <model name="SurveyEvaluationRule">
         <field name="evaluation" model="SurveyEvaluation" relation="belongsTo">
@@ -149,6 +174,8 @@
         <format name="title">{title}</format>
         <format name="teaser">{minimumScore} &lt; {maximumScore}</format>
 
+        <option name="behaviour.date" value="true" />
+        <option name="behaviour.log" value="true" />
         <option name="json.api" value="survey-evaluation-rules"/>
     </model>
     <model name="SurveyEntry" entryClass="ride\application\orm\survey\entry\SurveyEntryEntry">
@@ -168,6 +195,7 @@
         <format name="teaser">{dateAdded|date}</format>
 
         <option name="behaviour.date" value="true" />
+        <option name="behaviour.log" value="true" />
         <option name="order.direction" value="DESC"/>
         <option name="order.field" value="dateAdded"/>
         <option name="json.api" value="survey-entries"/>
