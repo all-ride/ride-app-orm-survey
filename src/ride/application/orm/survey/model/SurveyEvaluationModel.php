@@ -68,7 +68,11 @@ class SurveyEvaluationModel extends GenericModel {
             $page++;
         } while ($entries);
 
-        $evaluation->setAverageScore($totalScore / $numberEntries);
+        if ($numberEntries) {
+            $evaluation->setAverageScore($totalScore / $numberEntries);
+        } else {
+            $evaluation->setAverageScore(0);
+        }
 
         $this->save($evaluation);
     }
