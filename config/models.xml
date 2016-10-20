@@ -19,6 +19,7 @@
 
         <option name="behaviour.date" value="true" />
         <option name="behaviour.log" value="true" />
+        <option name="behaviour.slug" value="name" />
         <option name="json.api" value="surveys"/>
         <option name="scaffold.controller" value="ride\web\orm\controller\SurveyController" />
         <option name="scaffold.expose" value="true"/>
